@@ -15,6 +15,7 @@ class ChirpController extends Controller
     public function index()
     {
         $chirps = Chirp::with('user')->latest()->get();
+
         return view('chirps.index', [
             'chirps' => $chirps,
         ]);
@@ -40,7 +41,7 @@ class ChirpController extends Controller
     {
         //
         $validated = $request->validate([
-            'message' => ['required', 'string', 'max:255']
+            'message' => ['required', 'string', 'max:255'],
         ]);
 
         $request->user()->chirps()->create($validated);
@@ -70,7 +71,7 @@ class ChirpController extends Controller
         $this->authorize('update', $chirp);
 
         return view('chirps.edit', [
-            'chirp' => $chirp
+            'chirp' => $chirp,
         ]);
     }
 
@@ -86,7 +87,7 @@ class ChirpController extends Controller
         $this->authorize('update', $chirp);
 
         $validated = $request->validate([
-            'message' => ['required', 'string', 'max:255']
+            'message' => ['required', 'string', 'max:255'],
         ]);
 
         $chirp->update($validated);
